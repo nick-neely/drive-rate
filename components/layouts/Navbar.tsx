@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export function Navbar() {
   return (
-    <header className="bg-primary py-6 px-4 md:px-6">
+    <header className="bg-primary px-4 py-6 md:px-6">
       <div className="container flex items-center justify-between">
         <Link href="#" className="flex items-center gap-2" prefetch={false}>
           <CarIcon className="h-8 w-8 text-primary-foreground" />
@@ -18,7 +18,7 @@ export function Navbar() {
   );
 }
 
-function CarIcon(props) {
+function CarIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
