@@ -1,11 +1,12 @@
-export async function calculateRate(data: {
-  age: number;
-  drivingRecord: string;
-  make: string;
-  model: string;
-  year: number;
-  location: string;
-}): Promise<{ rate: number }> {
+import { rateSchema } from "@/components/form/RateForm";
+import { z } from "zod";
+
+export async function calculateRate(
+  data: z.infer<typeof rateSchema>,
+): Promise<{ rate: number }> {
+  // Validate data using the imported schema
+  rateSchema.parse(data);
+
   // Simulate a delay
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
