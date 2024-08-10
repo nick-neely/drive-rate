@@ -100,7 +100,7 @@ export function RateForm() {
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger id="driving-record">
                             <SelectValue placeholder="Select driving record" />
                           </SelectTrigger>
                           <SelectContent>
