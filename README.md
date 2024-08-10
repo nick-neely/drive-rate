@@ -66,7 +66,7 @@
 
 4. Open <http://localhost:3000> in your browser to see the app in action.
 
-## 📖 Usage
+### 📖 Usage
 
 To use the DriveRate application, follow these steps:
 
