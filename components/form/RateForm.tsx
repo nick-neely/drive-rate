@@ -15,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { fetchInsuranceRate } from "@/lib/mockApi";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -29,6 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { calculateRate } from "@/lib/calculateRate";
 
 const currentYear = new Date().getFullYear();
 
@@ -48,8 +48,7 @@ export function RateForm() {
   });
 
   async function onSubmit(data: z.infer<typeof schema>) {
-    console.log(data);
-    const result = await fetchInsuranceRate(data);
+    const result = await calculateRate(data);
     setRate(result.rate); // Set the fetched rate
   }
 

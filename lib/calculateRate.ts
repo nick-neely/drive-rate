@@ -1,4 +1,4 @@
-export async function fetchInsuranceRate(data: {
+export async function calculateRate(data: {
   age: number;
   drivingRecord: string;
   make: string;
@@ -20,15 +20,15 @@ export async function fetchInsuranceRate(data: {
     data.drivingRecord === "clean"
       ? 1.0
       : data.drivingRecord === "accidents"
-      ? 1.5
-      : 1.3;
+        ? 1.5
+        : 1.3;
 
   // Car year factor
   const yearFactor = data.year < 2010 ? 1.2 : data.year > 2020 ? 0.9 : 1.0;
 
   // Location factor (example: urban areas might have higher rates)
   const locationFactor = ["New York", "Los Angeles", "Chicago"].includes(
-    data.location
+    data.location,
   )
     ? 1.3
     : 1.0;

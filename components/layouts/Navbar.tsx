@@ -10,7 +10,7 @@ export function Navbar() {
             DriveRate
           </span>
         </Link>
-        <p className="text-sm font-medium text-primary-foreground">
+        <p className="hidden text-sm font-medium text-primary-foreground md:block">
           Get your car insurance rate in seconds
         </p>
       </div>

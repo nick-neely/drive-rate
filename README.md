@@ -2,6 +2,8 @@
 
 **DriveRate** is a web app designed to help users quickly estimate and compare car insurance rates based on factors like age, driving record, car make/model, and location. This project is currently in its MVP (Minimum Viable Product) state and is built with Next.js and TypeScript.
 
+![image](https://github.com/user-attachments/assets/cccf1b8b-2c61-4d56-a668-aaf29237e0f5)
+
 ## 📑 Table of Contents
 
 - [🚗 DriveRate](#-driverate)
@@ -64,7 +66,7 @@
 
 4. Open <http://localhost:3000> in your browser to see the app in action.
 
-## 📖 Usage
+### 📖 Usage
 
 To use the DriveRate application, follow these steps:
 
