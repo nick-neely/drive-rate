@@ -2,6 +2,7 @@ name: Restyled
 
 on:
   pull_request:
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -9,19 +10,25 @@ concurrency:
 
 jobs:
   restyled:
+    name: Restyle Code
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - uses: restyled-io/actions/setup@v4
-      - id: restyler
+      - name: Setup Restyled
+        uses: restyled-io/actions/setup@v4
+
+      - name: Run Restyler
+        id: restyler
         uses: restyled-io/actions/run@v4
         with:
           fail-on-differences: true
 
-      - if: |
+      - name: Create Pull Request
+        if: |
           !cancelled() &&
           steps.restyler.outputs.success == 'true' &&
           github.event.pull_request.head.repo.full_name == github.repository
