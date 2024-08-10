@@ -2,42 +2,28 @@ name: Restyled
 
 on:
   pull_request:
-  workflow_dispatch:
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   restyled:
-    name: Restyle Code
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      # Checkout the PR's branch
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
 
-      - name: Setup Restyled
-        uses: restyled-io/actions/setup@v4
-
-      - name: Run Restyler
-        id: restyler
-        uses: restyled-io/actions/run@v4
+      # Install and run the Restyled CLI, failing on differences
+      - uses: restyled-io/actions/setup@v3
+      - id: restyler
+        uses: restyled-io/actions/run@v3
         with:
           fail-on-differences: true
 
-      - name: Create Pull Request
-        if: |
-          !cancelled() &&
-          steps.restyler.outputs.success == 'true' &&
-          github.event.pull_request.head.repo.full_name == github.repository
+      # Maintain a sibling PR of the style fixes
+      - if: ${{ !cancelled() && steps.restyler.outputs.success == 'true' }}
         uses: peter-evans/create-pull-request@v6
         with:
           base: ${{ steps.restyler.outputs.restyled-base }}
           branch: ${{ steps.restyler.outputs.restyled-head }}
           title: ${{ steps.restyler.outputs.restyled-title }}
           body: ${{ steps.restyler.outputs.restyled-body }}
-          labels: "restyled"
-          reviewers: ${{ github.event.pull_request.user.login }}
-          delete-branch: true
