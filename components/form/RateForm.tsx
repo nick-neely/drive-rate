@@ -15,6 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { calculateRate } from "@/lib/calculateRate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -28,11 +29,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { calculateRate } from "@/lib/calculateRate";
 
 const currentYear = new Date().getFullYear();
 
-const schema = z.object({
+export const rateSchema = z.object({
   age: z.number().min(16).max(100),
   drivingRecord: z.enum(["clean", "accidents", "tickets"]),
   make: z.string().min(1),
@@ -43,11 +43,11 @@ const schema = z.object({
 
 export function RateForm() {
   const [rate, setRate] = useState<number | null>(null);
-  const form = useForm<z.infer<typeof schema>>({
-    resolver: zodResolver(schema),
+  const form = useForm<z.infer<typeof rateSchema>>({
+    resolver: zodResolver(rateSchema),
   });
 
-  async function onSubmit(data: z.infer<typeof schema>) {
+  async function onSubmit(data: z.infer<typeof rateSchema>) {
     const result = await calculateRate(data);
     setRate(result.rate); // Set the fetched rate
   }
@@ -100,7 +100,7 @@ export function RateForm() {
                           onValueChange={field.onChange}
                           defaultValue={field.value}
                         >
-                          <SelectTrigger>
+                          <SelectTrigger id="driving-record">
                             <SelectValue placeholder="Select driving record" />
                           </SelectTrigger>
                           <SelectContent>
